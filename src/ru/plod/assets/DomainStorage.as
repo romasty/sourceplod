@@ -17,7 +17,6 @@ package ru.plod.assets {
 			_appDomain = appDomain;
 		}
 
-
 		public function get appDomain():ApplicationDomain
 		{
 			return _appDomain;
@@ -30,8 +29,9 @@ package ru.plod.assets {
 
 		public function getSource(key : *) : Object
 		{
-			var cl : Class = getDefinition(key);
-			return new cl();
+			/*var cl : Class = getDefinition(key);
+			return new cl();*/
+			return getDefinition(key);
 		}
 	}
 }
