@@ -9,6 +9,6 @@ package ru.plod.core.service {
 
 	public function getService(srvClassRef:Class):*
 	{
-		return ServiceManager.getInstance().getService(srvClassRef);
+		return ServiceManager.instance.getService(srvClassRef);
 	}
 }

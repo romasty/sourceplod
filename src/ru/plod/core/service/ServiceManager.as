@@ -11,18 +11,17 @@ package ru.plod.core.service {
 	public class ServiceManager implements IServiceManager {
 
 
-		private static var _instance:ServiceManager = new ServiceManager();
+		private static var _instance:ServiceManager;
 
-		public static function getInstance():ServiceManager
+		public static function get instance():ServiceManager
 		{
-			return _instance;
+			return _instance ||= new ServiceManager();
 		}
 
 		private var _srvMap:ClassDictionary = new ClassDictionary(true);
 
 		public function registerService(srvInterface:Class, srvImplementation:Object):void
 		{
-
 			_srvMap.registerInstance(srvInterface, srvImplementation)
 		}
 
