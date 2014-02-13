@@ -5,25 +5,21 @@
  * Time: 10:44 PM
  * To change this template use File | Settings | File Templates.
  */
-package ru.plod.adt {
-	import flash.geom.Point;
+package ru.plod.math {
 
-	import mx.effects.effectClasses.AddRemoveEffectTargetFilter;
-
-	public class Segment {
+	public class SliderPosition {
 
 		private var _min:Number;
 		private var _max:Number;
 		private var _value:Number;
 
-		public function Segment(min:Number, max:Number, value:Number = NaN)
+		public function SliderPosition(min:Number, max:Number, value:Number = NaN)
 		{
 			_min = min;
 			_max = max;
 			_value = isNaN(value) ? _min : value;
 			validateValue();
 		}
-
 
 		public function get min():Number
 		{
@@ -76,7 +72,6 @@ package ru.plod.adt {
 			_value = pos * (_max - _min) + _min;
 		}
 
-
 		public function get inverted() : Boolean
 		{
 			return _min > _max;
@@ -118,7 +113,6 @@ package ru.plod.adt {
 			return Math.abs(_max - _min);
 		}
 
-
 		private function validateValue():void
 		{
 			if (_min < _max) {
@@ -136,13 +130,12 @@ package ru.plod.adt {
 			}
 		}
 
-
-		public function clone() : Segment
+		public function clone() : SliderPosition
 		{
-			return new Segment(_min, _max, _value);
+			return new SliderPosition(_min, _max, _value);
 		}
 
-		public function equals(s : Segment) : Boolean
+		public function equals(s : SliderPosition) : Boolean
 		{
 			return s ? s._min == _min && s._max == _max && s._value == _value : false;
 		}
