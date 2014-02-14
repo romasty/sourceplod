@@ -22,7 +22,6 @@ package ru.plod.gui.layout {
 		protected var _verticalMeasure : ILayoutElementMeasure;
 		protected var _cell : Rectangle = new Rectangle();
 
-
 		public function AbstractCellLayout(alignType:String, horizontalMeasure:ILayoutElementMeasure, verticalMeasure:ILayoutElementMeasure)
 		{
 			_alignType = alignType;
@@ -38,7 +37,9 @@ package ru.plod.gui.layout {
 
 		public function set horizontalMeasure(value:ILayoutElementMeasure):void
 		{
-			_horizontalMeasure = value;
+			if(value != null && value != _horizontalMeasure) {
+				_horizontalMeasure = value;
+			}
 		}
 
 		public function get verticalMeasure():ILayoutElementMeasure
@@ -48,17 +49,19 @@ package ru.plod.gui.layout {
 
 		public function set verticalMeasure(value:ILayoutElementMeasure):void
 		{
-			_verticalMeasure = value;
+			if(value != null && value != _verticalMeasure) {
+				_verticalMeasure = value;
+			}
 		}
 
 		public function setHorizontalMeasure(...args):void
 		{
-			_horizontalMeasure = guessMeasure.apply(this, args);
+			horizontalMeasure = guessMeasure.apply(this, args);
 		}
 
 		public function setVerticalMeasure(...args):void
 		{
-			_verticalMeasure = guessMeasure.apply(this, args);
+			verticalMeasure = guessMeasure.apply(this, args);
 		}
 
 		public function arrange(children:Vector.<DisplayObject>):void
