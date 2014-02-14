@@ -14,13 +14,12 @@ package ru.plod.gui.layout {
 	import ru.plod.gui.layout.measure.LayoutMeasureType;
 	import ru.plod.gui.layout.measure.LayoutMeasureUnion;
 
-	public class VerticalLayout extends AbstractCellLayout{
+	public class VerticalLayout extends AbstractCellLayout {
 
-		public function VerticalLayout(alignType:String = null, type : String = "individual", cellWidth:int=0, cellHeight:int=0)
+		public function VerticalLayout(alignType:String = null, type:String = "individual", cellWidth:int = 0, cellHeight:int = 0)
 		{
-			var hm:ILayoutElementMeasure = cellWidth ? new LayoutMeasureFixed(cellWidth) : new LayoutMeasureUnion();
-			var vm:ILayoutElementMeasure = LayoutMeasureType.getMeasure(type, cellHeight);
-
+			var hm:ILayoutElementMeasure = cellWidth > 0 ? new LayoutMeasureFixed(cellWidth) : LayoutMeasureType.getMeasure(type);
+			var vm:ILayoutElementMeasure = cellHeight > 0 ? new LayoutMeasureFixed(cellHeight) : LayoutMeasureType.getMeasure(type);
 			super(alignType, hm, vm);
 		}
 

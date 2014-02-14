@@ -24,7 +24,7 @@ package ru.plod.gui.layout {
 
 		public function AbstractCellLayout(alignType:String, horizontalMeasure:ILayoutElementMeasure, verticalMeasure:ILayoutElementMeasure)
 		{
-			_alignType = alignType;
+			_alignType = alignType ? alignType : AlignType.TOP_LEFT;
 			_horizontalMeasure = horizontalMeasure;
 			_verticalMeasure = verticalMeasure;
 		}

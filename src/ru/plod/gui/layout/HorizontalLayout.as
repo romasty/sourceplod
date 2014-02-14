@@ -15,11 +15,10 @@ package ru.plod.gui.layout {
 
 	public class HorizontalLayout extends AbstractCellLayout implements ILayout {
 
-		public function HorizontalLayout(alignType:String = null, type : String = "individual", cellWidth:int=0, cellHeight:int=0)
+		public function HorizontalLayout(alignType:String = null, type:String = "individual", cellWidth:int = 0, cellHeight:int = 0)
 		{
-			var hm:ILayoutElementMeasure = LayoutMeasureType.getMeasure(type, cellWidth);
-			var vm:ILayoutElementMeasure = cellHeight ? new LayoutMeasureFixed(cellHeight) : new LayoutMeasureUnion();
-
+			var hm:ILayoutElementMeasure = cellWidth > 0 ? new LayoutMeasureFixed(cellWidth) : LayoutMeasureType.getMeasure(type);
+			var vm:ILayoutElementMeasure = cellHeight > 0 ? new LayoutMeasureFixed(cellHeight) : LayoutMeasureType.getMeasure(type);
 			super(alignType, hm, vm);
 		}
 

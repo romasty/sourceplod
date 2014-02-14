@@ -12,17 +12,18 @@ package ru.plod.gui.layout {
 
 	import ru.plod.gui.layout.measure.ILayoutElementMeasure;
 	import ru.plod.gui.layout.measure.LayoutMeasureFixed;
+	import ru.plod.gui.layout.measure.LayoutMeasureType;
 
 	public class TileLayout extends AbstractCellLayout {
 
 		protected var _columns:int;
 
-		public function TileLayout(columns:int, alignType:String = null)
+		public function TileLayout(columns:int, alignType:String = null, type:String = "union", cellWidth:int = 0, cellHeight:int = 0)
 		{
 			_columns = columns;
 
-			var hm:ILayoutElementMeasure = new LayoutMeasureFixed(140);
-			var vm:ILayoutElementMeasure = new LayoutMeasureFixed(140);
+			var hm:ILayoutElementMeasure = cellWidth > 0 ? new LayoutMeasureFixed(cellWidth) : LayoutMeasureType.getMeasure(type);
+			var vm:ILayoutElementMeasure = cellHeight > 0 ? new LayoutMeasureFixed(cellHeight) : LayoutMeasureType.getMeasure(type);
 
 			super(alignType, hm, vm);
 		}
@@ -47,7 +48,7 @@ package ru.plod.gui.layout {
 			var rowIndex:int = index / _columns;
 
 			_cell.x = _horizontalMeasure.getPosition(columnIndex);
-			_cell.width =  _horizontalMeasure.getSize(columnIndex);
+			_cell.width = _horizontalMeasure.getSize(columnIndex);
 			_cell.y = _verticalMeasure.getPosition(rowIndex);
 			_cell.height = _verticalMeasure.getSize(rowIndex);
 
