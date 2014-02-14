@@ -2,39 +2,38 @@
  * Created with IntelliJ IDEA.
  * User: vic
  * Date: 2/15/14
- * Time: 12:35 AM
+ * Time: 12:36 AM
  * To change this template use File | Settings | File Templates.
  */
 package ru.plod.gui.layout.measure {
+	public class LayoutMeasureUnion implements ILayoutElementMeasure{
 
-	import ru.plod.helpers.MeasureQueue;
+		private var _size:int;
+		private var _lastIndex : uint;
 
-	public class SizeMeasureIndividual implements ISizeMeasure {
-
-		private var _queue:MeasureQueue = new MeasureQueue();
-
-		public function SizeMeasureIndividual()
+		public function LayoutMeasureUnion()
 		{
 		}
 
 		public function measure(index:uint, size:int):void
 		{
-			_queue.put(index, size);
+			if(index> _lastIndex) _lastIndex = index;
+			if(size > _size) _size = size;
 		}
 
 		public function getPosition(index:uint):int
 		{
-			return _queue.positions[index];
+			return _size * index;
 		}
 
 		public function getSize(index:uint):int
 		{
-			return _queue.sizes[index];
+			return _size;
 		}
 
 		public function get totalSize():int
 		{
-			return _queue.totalSize;
+			return _lastIndex * _size;
 		}
 	}
 }

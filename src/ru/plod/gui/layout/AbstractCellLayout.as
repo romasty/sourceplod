@@ -10,22 +10,55 @@ package ru.plod.gui.layout {
 	import flash.display.DisplayObject;
 	import flash.geom.Rectangle;
 
-	import ru.plod.gui.layout.measure.ISizeMeasure;
+	import ru.plod.gui.layout.measure.ILayoutElementMeasure;
+	import ru.plod.gui.layout.measure.LayoutMeasureFixed;
+	import ru.plod.gui.layout.measure.LayoutMeasureType;
 
 	public class AbstractCellLayout implements ILayout {
 
 		public var checkBounds : Boolean = true;
 		protected var _alignType : String;
-		protected var _horizontalMeasure : ISizeMeasure;
-		protected var _verticalMeasure : ISizeMeasure;
+		protected var _horizontalMeasure : ILayoutElementMeasure;
+		protected var _verticalMeasure : ILayoutElementMeasure;
 		protected var _cell : Rectangle = new Rectangle();
 
 
-		public function AbstractCellLayout(alignType:String, horizontalMeasure:ISizeMeasure, verticalMeasure:ISizeMeasure)
+		public function AbstractCellLayout(alignType:String, horizontalMeasure:ILayoutElementMeasure, verticalMeasure:ILayoutElementMeasure)
 		{
 			_alignType = alignType;
 			_horizontalMeasure = horizontalMeasure;
 			_verticalMeasure = verticalMeasure;
+		}
+
+
+		public function get horizontalMeasure():ILayoutElementMeasure
+		{
+			return _horizontalMeasure;
+		}
+
+		public function set horizontalMeasure(value:ILayoutElementMeasure):void
+		{
+			_horizontalMeasure = value;
+		}
+
+		public function get verticalMeasure():ILayoutElementMeasure
+		{
+			return _verticalMeasure;
+		}
+
+		public function set verticalMeasure(value:ILayoutElementMeasure):void
+		{
+			_verticalMeasure = value;
+		}
+
+		public function setHorizontalMeasure(...args):void
+		{
+			_horizontalMeasure = guessMeasure.apply(this, args);
+		}
+
+		public function setVerticalMeasure(...args):void
+		{
+			_verticalMeasure = guessMeasure.apply(this, args);
 		}
 
 		public function arrange(children:Vector.<DisplayObject>):void
@@ -102,6 +135,25 @@ package ru.plod.gui.layout {
 					break;
 				default : //
 			}
+		}
+
+		private function guessMeasure(...args) : ILayoutElementMeasure
+		{
+			if(args.length == 0) {
+				throw new ArgumentError("expected one or more argumens");
+			}
+
+			var value :* = args.shift();
+			if(value is ILayoutElementMeasure) {
+				return value;
+			} else if(value is String) {
+				args.unshift(value);
+				return LayoutMeasureType.getMeasure.apply(null, args);
+			} else if(value is int) {
+				return new LayoutMeasureFixed(value);
+			}
+
+			return null;
 		}
 	}
 }

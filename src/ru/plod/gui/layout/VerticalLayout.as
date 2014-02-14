@@ -8,16 +8,18 @@
 package ru.plod.gui.layout {
 	import flash.geom.Rectangle;
 
-	import ru.plod.gui.layout.measure.ISizeMeasure;
-	import ru.plod.gui.layout.measure.SizeMeasureFixed;
-	import ru.plod.gui.layout.measure.SizeMeasureIndividual;
+	import ru.plod.gui.layout.measure.ILayoutElementMeasure;
+	import ru.plod.gui.layout.measure.LayoutMeasureFixed;
+	import ru.plod.gui.layout.measure.LayoutMeasureIndividual;
+	import ru.plod.gui.layout.measure.LayoutMeasureType;
+	import ru.plod.gui.layout.measure.LayoutMeasureUnion;
 
 	public class VerticalLayout extends AbstractCellLayout{
 
-		public function VerticalLayout(alignType:String = null)
+		public function VerticalLayout(alignType:String = null, type : String = "individual", cellWidth:int=0, cellHeight:int=0)
 		{
-			var hm:ISizeMeasure = new SizeMeasureFixed(300);
-			var vm:ISizeMeasure = new SizeMeasureIndividual();
+			var hm:ILayoutElementMeasure = cellWidth ? new LayoutMeasureFixed(cellWidth) : new LayoutMeasureUnion();
+			var vm:ILayoutElementMeasure = LayoutMeasureType.getMeasure(type, cellHeight);
 
 			super(alignType, hm, vm);
 		}
@@ -25,7 +27,7 @@ package ru.plod.gui.layout {
 
 		override protected function getRectangle(index:uint):Rectangle
 		{
-			//_cell.x = _horizontalMeasure.getPosition(index);
+			_cell.x = 0;
 			_cell.y = _verticalMeasure.getPosition(index);
 			_cell.width = _horizontalMeasure.getSize(index);
 			_cell.height = _verticalMeasure.getSize(index);

@@ -10,8 +10,8 @@ package ru.plod.gui.layout {
 	import flash.display.DisplayObject;
 	import flash.geom.Rectangle;
 
-	import ru.plod.gui.layout.measure.ISizeMeasure;
-	import ru.plod.gui.layout.measure.SizeMeasureFixed;
+	import ru.plod.gui.layout.measure.ILayoutElementMeasure;
+	import ru.plod.gui.layout.measure.LayoutMeasureFixed;
 
 	public class TileLayout extends AbstractCellLayout {
 
@@ -21,8 +21,8 @@ package ru.plod.gui.layout {
 		{
 			_columns = columns;
 
-			var hm:ISizeMeasure = new SizeMeasureFixed(140);
-			var vm:ISizeMeasure = new SizeMeasureFixed(140);
+			var hm:ILayoutElementMeasure = new LayoutMeasureFixed(140);
+			var vm:ILayoutElementMeasure = new LayoutMeasureFixed(140);
 
 			super(alignType, hm, vm);
 		}

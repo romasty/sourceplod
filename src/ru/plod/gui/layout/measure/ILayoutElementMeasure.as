@@ -6,7 +6,7 @@
  * To change this template use File | Settings | File Templates.
  */
 package ru.plod.gui.layout.measure {
-	public interface ISizeMeasure {
+	public interface ILayoutElementMeasure {
 
 		function measure(index:uint, size:int):void;
 		function getPosition(index:uint):int;

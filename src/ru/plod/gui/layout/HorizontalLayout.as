@@ -8,15 +8,17 @@
 package ru.plod.gui.layout {
 	import flash.geom.Rectangle;
 
-	import ru.plod.gui.layout.measure.ISizeMeasure;
-	import ru.plod.gui.layout.measure.SizeMeasureUnion;
+	import ru.plod.gui.layout.measure.ILayoutElementMeasure;
+	import ru.plod.gui.layout.measure.LayoutMeasureFixed;
+	import ru.plod.gui.layout.measure.LayoutMeasureType;
+	import ru.plod.gui.layout.measure.LayoutMeasureUnion;
 
 	public class HorizontalLayout extends AbstractCellLayout implements ILayout {
 
-		public function HorizontalLayout(alignType:String = null)
+		public function HorizontalLayout(alignType:String = null, type : String = "individual", cellWidth:int=0, cellHeight:int=0)
 		{
-			var hm:ISizeMeasure = new SizeMeasureUnion();
-			var vm:ISizeMeasure = new SizeMeasureUnion();
+			var hm:ILayoutElementMeasure = LayoutMeasureType.getMeasure(type, cellWidth);
+			var vm:ILayoutElementMeasure = cellHeight ? new LayoutMeasureFixed(cellHeight) : new LayoutMeasureUnion();
 
 			super(alignType, hm, vm);
 		}
@@ -25,7 +27,7 @@ package ru.plod.gui.layout {
 		override protected function getRectangle(index:uint):Rectangle
 		{
 			_cell.x = _horizontalMeasure.getPosition(index);
-			//_cell.y = _verticalMeasure.getPosition(index);
+			_cell.y = 0;
 			_cell.width = _horizontalMeasure.getSize(index);
 			_cell.height = _verticalMeasure.getSize(index);
 
