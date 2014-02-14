@@ -5,7 +5,7 @@
  * Time: 10:28 PM
  * To change this template use File | Settings | File Templates.
  */
-package ru.plod.math {
+package ru.plod.helpers {
 	import ru.kashaya.view.components.layout.*;
 	import flash.geom.Rectangle;
 

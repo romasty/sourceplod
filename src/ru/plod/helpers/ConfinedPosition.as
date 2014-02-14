@@ -5,15 +5,15 @@
  * Time: 10:44 PM
  * To change this template use File | Settings | File Templates.
  */
-package ru.plod.math {
+package ru.plod.helpers {
 
-	public class SliderPosition {
+	public class ConfinedPosition {
 
 		private var _min:Number;
 		private var _max:Number;
 		private var _value:Number;
 
-		public function SliderPosition(min:Number, max:Number, value:Number = NaN)
+		public function ConfinedPosition(min:Number, max:Number, value:Number = NaN)
 		{
 			_min = min;
 			_max = max;
@@ -130,12 +130,12 @@ package ru.plod.math {
 			}
 		}
 
-		public function clone() : SliderPosition
+		public function clone() : ConfinedPosition
 		{
-			return new SliderPosition(_min, _max, _value);
+			return new ConfinedPosition(_min, _max, _value);
 		}
 
-		public function equals(s : SliderPosition) : Boolean
+		public function equals(s : ConfinedPosition) : Boolean
 		{
 			return s ? s._min == _min && s._max == _max && s._value == _value : false;
 		}

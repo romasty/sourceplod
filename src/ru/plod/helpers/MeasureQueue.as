@@ -5,7 +5,7 @@
  * Time: 1:16 AM
  * To change this template use File | Settings | File Templates.
  */
-package ru.plod.math {
+package ru.plod.helpers {
 	public class MeasureQueue {
 
 		private var _positions:Vector.<int> = new Vector.<int>();
