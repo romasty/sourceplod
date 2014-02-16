@@ -52,9 +52,11 @@ package ru.plod.gui.layout {
 			return _layouts.length;
 		}
 
+
+
 		public function arrange(children:Vector.<DisplayObject>):void
 		{
-
+			//TODO:
 		}
 	}
 }
