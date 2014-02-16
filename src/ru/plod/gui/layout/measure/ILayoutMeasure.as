@@ -6,11 +6,14 @@
  * To change this template use File | Settings | File Templates.
  */
 package ru.plod.gui.layout.measure {
-	public interface ILayoutElementMeasure {
+	public interface ILayoutMeasure {
 
 		function measure(index:uint, size:int):void;
 		function getPosition(index:uint):int;
 		function getSize(index:uint):int;
 		function get totalSize():int;
+
+		function get gap():int;
+		function set gap(value:int):void;
 	}
 }

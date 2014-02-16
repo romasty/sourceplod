@@ -10,7 +10,7 @@ package ru.plod.gui.layout {
 	import flash.display.DisplayObject;
 	import flash.geom.Rectangle;
 
-	import ru.plod.gui.layout.measure.ILayoutElementMeasure;
+	import ru.plod.gui.layout.measure.ILayoutMeasure;
 	import ru.plod.gui.layout.measure.LayoutMeasureFixed;
 	import ru.plod.gui.layout.measure.LayoutMeasureType;
 
@@ -18,16 +18,29 @@ package ru.plod.gui.layout {
 
 		protected var _columns:int;
 
-		public function TileLayout(columns:int, alignType:String = null, type:String = "union", cellWidth:int = 0, cellHeight:int = 0)
+		public function TileLayout(columns:int,
+								   alignType:String = null,
+								   horizontalGap:int = 0, verticalGap:int = 0,
+								   type:String = "union",
+								   cellWidth:int = 0, cellHeight:int = 0)
 		{
 			_columns = columns;
 
-			var hm:ILayoutElementMeasure = cellWidth > 0 ? new LayoutMeasureFixed(cellWidth) : LayoutMeasureType.getMeasure(type);
-			var vm:ILayoutElementMeasure = cellHeight > 0 ? new LayoutMeasureFixed(cellHeight) : LayoutMeasureType.getMeasure(type);
+			var hm:ILayoutMeasure = cellWidth > 0 ? new LayoutMeasureFixed(cellWidth, horizontalGap) : LayoutMeasureType.getMeasure(type, horizontalGap);
+			var vm:ILayoutMeasure = cellHeight > 0 ? new LayoutMeasureFixed(cellHeight, verticalGap) : LayoutMeasureType.getMeasure(type, verticalGap);
 
 			super(alignType, hm, vm);
 		}
 
+		public function set horizontalGap(value:int):void
+		{
+			_horizontalMeasure.gap = value;
+		}
+
+		public function set verticalGap(value:int):void
+		{
+			_horizontalMeasure.gap = value;
+		}
 
 		override protected function measure(children:Vector.<DisplayObject>):void
 		{

@@ -6,13 +6,26 @@
  * To change this template use File | Settings | File Templates.
  */
 package ru.plod.gui.layout.measure {
-	public class LayoutMeasureUnion implements ILayoutElementMeasure{
+	public class LayoutMeasureUnion implements ILayoutMeasure{
 
 		private var _size:int;
 		private var _lastIndex : uint;
+		private var _gap : int;
 
-		public function LayoutMeasureUnion()
+		public function LayoutMeasureUnion(gap : int = 0)
 		{
+			_gap = gap;
+		}
+
+
+		public function get gap():int
+		{
+			return _gap;
+		}
+
+		public function set gap(value:int):void
+		{
+			_gap = value;
 		}
 
 		public function measure(index:uint, size:int):void
@@ -23,7 +36,7 @@ package ru.plod.gui.layout.measure {
 
 		public function getPosition(index:uint):int
 		{
-			return _size * index;
+			return (_size + _gap) * index;
 		}
 
 		public function getSize(index:uint):int
@@ -33,7 +46,7 @@ package ru.plod.gui.layout.measure {
 
 		public function get totalSize():int
 		{
-			return _lastIndex * _size;
+			return _lastIndex * (_size + _gap);
 		}
 	}
 }

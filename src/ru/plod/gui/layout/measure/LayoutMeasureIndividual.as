@@ -9,12 +9,24 @@ package ru.plod.gui.layout.measure {
 
 	import ru.plod.helpers.MeasureQueue;
 
-	public class LayoutMeasureIndividual implements ILayoutElementMeasure {
+	public class LayoutMeasureIndividual implements ILayoutMeasure {
 
 		private var _queue:MeasureQueue = new MeasureQueue();
+		private var _gap : int;
 
-		public function LayoutMeasureIndividual()
+		public function LayoutMeasureIndividual(gap : int = 0)
 		{
+			_gap = gap;
+		}
+
+		public function get gap():int
+		{
+			return _gap;
+		}
+
+		public function set gap(value:int):void
+		{
+			_gap = value;
 		}
 
 		public function measure(index:uint, size:int):void
@@ -24,7 +36,7 @@ package ru.plod.gui.layout.measure {
 
 		public function getPosition(index:uint):int
 		{
-			return _queue.positions[index];
+			return _queue.positions[index] + index * _gap;
 		}
 
 		public function getSize(index:uint):int
@@ -34,7 +46,7 @@ package ru.plod.gui.layout.measure {
 
 		public function get totalSize():int
 		{
-			return _queue.totalSize;
+			return _queue.totalSize + (_queue.length - 1) * _gap;
 		}
 	}
 }

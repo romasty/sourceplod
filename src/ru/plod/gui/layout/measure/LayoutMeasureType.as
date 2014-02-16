@@ -12,14 +12,14 @@ package ru.plod.gui.layout.measure {
 		public static const UNION : String = "union";
 		public static const INDIVIDUAL : String = "individual";
 
-		public static function getMeasure(type:String, ...args):ILayoutElementMeasure
+		public static function getMeasure(type:String, ...args):ILayoutMeasure
 		{
 			if(type == FIXED) {
-				return new LayoutMeasureFixed(args[0]);
+				return new LayoutMeasureFixed(args[0], args[1]);
 			} else if(type == UNION) {
-				return new LayoutMeasureUnion();
+				return new LayoutMeasureUnion(args[0]);
 			} else if(type == INDIVIDUAL) {
-				return new LayoutMeasureIndividual();
+				return new LayoutMeasureIndividual(args[0]);
 			}
 		 	return null;
 		}

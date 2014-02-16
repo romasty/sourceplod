@@ -10,7 +10,7 @@ package ru.plod.gui.layout {
 	import flash.display.DisplayObject;
 	import flash.geom.Rectangle;
 
-	import ru.plod.gui.layout.measure.ILayoutElementMeasure;
+	import ru.plod.gui.layout.measure.ILayoutMeasure;
 	import ru.plod.gui.layout.measure.LayoutMeasureFixed;
 	import ru.plod.gui.layout.measure.LayoutMeasureType;
 
@@ -18,11 +18,11 @@ package ru.plod.gui.layout {
 
 		public var checkBounds : Boolean = true;
 		protected var _alignType : String;
-		protected var _horizontalMeasure : ILayoutElementMeasure;
-		protected var _verticalMeasure : ILayoutElementMeasure;
+		protected var _horizontalMeasure : ILayoutMeasure;
+		protected var _verticalMeasure : ILayoutMeasure;
 		protected var _cell : Rectangle = new Rectangle();
 
-		public function AbstractCellLayout(alignType:String, horizontalMeasure:ILayoutElementMeasure, verticalMeasure:ILayoutElementMeasure)
+		public function AbstractCellLayout(alignType:String, horizontalMeasure:ILayoutMeasure, verticalMeasure:ILayoutMeasure)
 		{
 			_alignType = alignType ? alignType : AlignType.TOP_LEFT;
 			_horizontalMeasure = horizontalMeasure;
@@ -30,24 +30,30 @@ package ru.plod.gui.layout {
 		}
 
 
-		public function get horizontalMeasure():ILayoutElementMeasure
+		public function set gap(value:int):void
+		{
+			_horizontalMeasure.gap = value;
+			_verticalMeasure.gap = value;
+		}
+
+		public function get horizontalMeasure():ILayoutMeasure
 		{
 			return _horizontalMeasure;
 		}
 
-		public function set horizontalMeasure(value:ILayoutElementMeasure):void
+		public function set horizontalMeasure(value:ILayoutMeasure):void
 		{
 			if(value != null && value != _horizontalMeasure) {
 				_horizontalMeasure = value;
 			}
 		}
 
-		public function get verticalMeasure():ILayoutElementMeasure
+		public function get verticalMeasure():ILayoutMeasure
 		{
 			return _verticalMeasure;
 		}
 
-		public function set verticalMeasure(value:ILayoutElementMeasure):void
+		public function set verticalMeasure(value:ILayoutMeasure):void
 		{
 			if(value != null && value != _verticalMeasure) {
 				_verticalMeasure = value;
@@ -140,14 +146,14 @@ package ru.plod.gui.layout {
 			}
 		}
 
-		private function guessMeasure(...args) : ILayoutElementMeasure
+		private function guessMeasure(...args) : ILayoutMeasure
 		{
 			if(args.length == 0) {
 				throw new ArgumentError("expected one or more argumens");
 			}
 
 			var value :* = args.shift();
-			if(value is ILayoutElementMeasure) {
+			if(value is ILayoutMeasure) {
 				return value;
 			} else if(value is String) {
 				args.unshift(value);
