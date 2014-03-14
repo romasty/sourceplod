@@ -13,11 +13,11 @@ package ru.plod.helpers {
 		private var _max:Number;
 		private var _value:Number;
 
-		public function Diapason(min:Number = 0, max:Number = 1, value:Number = NaN)
+		public function Diapason(min:Number = 0, max:Number = 1, value:Number = 0)
 		{
 			_min = min;
 			_max = max;
-			_value = isNaN(value) ? _min : value;
+			_value = value;
 			validateValue();
 		}
 
@@ -113,6 +113,54 @@ package ru.plod.helpers {
 			return Math.abs(_max - _min);
 		}
 
+		public function contains(target : Diapason):Boolean
+		{
+			return containsValue(target._min) && containsValue(target._max);
+		}
+
+		public function intersects(target : Diapason):Boolean
+		{
+			var thisMin : Number = _min < _max ? _min : _max;
+			var thisMax : Number = _min < _max ? _max : _min;
+
+			var targetMin : Number = target._min < target._max ? target._min : target._max;
+			var targetMax : Number = target._min < target._max ? target._max : target._min;
+
+			return (thisMin < targetMin && targetMin < thisMax && targetMax > thisMax) ||
+					(thisMin < targetMax && targetMax < thisMax && targetMin < thisMin)
+		}
+
+		public function intersection(target : Diapason, result : Diapason = null):Diapason
+		{
+			if(!intersects(target)) return null;
+
+			if(result == null) result = new Diapason();
+
+			var thisMin : Number = _min < _max ? _min : _max;
+			var thisMax : Number = _min < _max ? _max : _min;
+
+			var targetMin : Number = target._min < target._max ? target._min : target._max;
+			var targetMax : Number = target._min < target._max ? target._max : target._min;
+
+			if(thisMin < targetMin && targetMin < thisMax) {
+				result._min = targetMin;
+				result._max = thisMax;
+			} else {
+				result._min = targetMin;
+				result._max = targetMax;
+			}
+
+			result.validateValue();
+
+			return result;
+		}
+
+		public function containsValue(value : Number):Boolean
+		{
+			return _min < _max ? (value >= _min && value <= _max) : (value >= _max && value <= _min);
+		}
+
+
 		private function validateValue():void
 		{
 			if (_min < _max) {
@@ -135,20 +183,27 @@ package ru.plod.helpers {
 			return new Diapason(_min, _max, _value);
 		}
 
-		public function equals(s:Diapason):Boolean
+		public function equals(target:Diapason):Boolean
 		{
-			return s ? s._min == _min && s._max == _max && s._value == _value : false;
+			return  target._min == _min && target._max == _max && target._value == _value;
+		}
+
+		public function copy(source:Diapason):void
+		{
+			_min = source._min;
+			_max = source._max;
+			_value = source._value;
 		}
 
 		public function toString():String
 		{
-			var str:String = "Segment {"
+			var str:String = "[Segment {"
 			str += "min:" + _min + "; ";
 			str += "max:" + _max + "; ";
 			str += "value:" + _value + "; ";
-			str += "position:" + ratio + "; ";
-			str += "length:" + span + "; ";
-			str += "}"
+			str += "ratio:" + ratio + "; ";
+			str += "span:" + span + "; ";
+			str += "}]"
 			return str;
 		}
 	}
