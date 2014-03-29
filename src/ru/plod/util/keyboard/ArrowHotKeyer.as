@@ -6,7 +6,7 @@
      * ...
      * @author Romasty
      */
-    public class ArrowHotKeyer extends AbstractHKMap
+    public class ArrowHotkeyer extends AbstractHKMap
     {
 
         private var _xFunc : Function;
@@ -14,7 +14,7 @@
 
         private var _useWASD : Boolean;
 
-        public function ArrowHotKeyer(xFunc : Function, yFunc : Function, useWASD : Boolean = true)
+        public function ArrowHotkeyer(xFunc : Function, yFunc : Function, useWASD : Boolean = true)
         {
             _xFunc = xFunc;
             _yFunc = yFunc;
@@ -29,17 +29,17 @@
         {
             super.init();
 
-            getHotkey(Keyboard.LEFT).eventChange.subscribe(leftKeyChange);
-            getHotkey(Keyboard.RIGHT).eventChange.subscribe(rightKeyChange);
-            getHotkey(Keyboard.UP).eventChange.subscribe(upKeyChange);
-            getHotkey(Keyboard.DOWN).eventChange.subscribe(downKeyChange);
+            getHotkey(Keyboard.LEFT).eventPressed.subscribe(leftKeyChange);
+            getHotkey(Keyboard.RIGHT).eventPressed.subscribe(rightKeyChange);
+            getHotkey(Keyboard.UP).eventPressed.subscribe(upKeyChange);
+            getHotkey(Keyboard.DOWN).eventPressed.subscribe(downKeyChange);
 
             if (_useWASD) {
 
-                getHotkey(Keyboard.A).eventChange.subscribe(leftKeyChange);
-                getHotkey(Keyboard.D).eventChange.subscribe(rightKeyChange);
-                getHotkey(Keyboard.W).eventChange.subscribe(upKeyChange);
-                getHotkey(Keyboard.S).eventChange.subscribe(downKeyChange);
+                getHotkey(Keyboard.A).eventPressed.subscribe(leftKeyChange);
+                getHotkey(Keyboard.D).eventPressed.subscribe(rightKeyChange);
+                getHotkey(Keyboard.W).eventPressed.subscribe(upKeyChange);
+                getHotkey(Keyboard.S).eventPressed.subscribe(downKeyChange);
             }
 
         }

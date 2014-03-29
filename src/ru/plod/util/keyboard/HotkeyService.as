@@ -4,6 +4,7 @@ package ru.plod.util.keyboard
 
     import flash.display.Stage;
     import flash.events.KeyboardEvent;
+    import flash.ui.Keyboard;
     import flash.utils.Dictionary;
 
     public class  HotkeyService
