@@ -28,7 +28,7 @@ package ru.plod.util.keyboard
         {
             var pressed : Boolean = false;
             for each (var h : Hotkey in hotkeys) {
-                pressed ||= h.pressed;
+                pressed &&= h.pressed;
             }
             update(pressed);
         }
