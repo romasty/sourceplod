@@ -16,21 +16,21 @@ package ru.plod.util.keyboard
             super();
         }
 
-        internal function addHotkey(hotkey : Hotkey):void
+        public function addHotkey(hotkey : Hotkey):void
         {
             if(hotkeys.indexOf(hotkey) == -1) {
                 hotkeys.push(hotkey);
-                hotkey.eventPressed.subscribe(onChange);
+                hotkey.eventChange.subscribe(onChange);
             }
         }
 
         protected function onChange(hotkey : Hotkey) : void
         {
-            var pressed : Boolean = false;
+            var combo : Boolean = false;
             for each (var h : Hotkey in hotkeys) {
-                pressed &&= h.pressed;
+                combo &&= h.pressed;
             }
-            update(pressed);
+            update(combo);
         }
     }
 }

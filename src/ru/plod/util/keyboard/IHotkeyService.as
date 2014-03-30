@@ -11,6 +11,6 @@ package ru.plod.util.keyboard
     {
         function getHotkey(keyCode : uint) : Hotkey;
 
-        function getCombo(...args) : HotkeyCombo ;
+        //function getCombo(...args) : HotkeyCombo ;
     }
 }

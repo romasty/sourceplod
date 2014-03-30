@@ -11,15 +11,15 @@ package ru.plod.util.keyboard
 
     public class AbstractHotkey
     {
-        public const eventPressed : Broadcaster = new Broadcaster();
+        public const eventChange : Broadcaster = new Broadcaster();
         public const eventEnabled : Broadcaster = new Broadcaster();
 
         protected var _pressed : Boolean = false;
         protected var _enabled : Boolean = true;
 
-        public function Hotkey()
+        public function AbstractHotkey()
         {
-            eventPressed.target = this;
+            eventChange.target = this;
             eventEnabled.target = this;
         }
 
@@ -49,7 +49,7 @@ package ru.plod.util.keyboard
         {
             if(_pressed != pressed) {
                 _pressed = pressed;
-                eventPressed.broadcast();
+                eventChange.broadcast();
             }
         }
     }

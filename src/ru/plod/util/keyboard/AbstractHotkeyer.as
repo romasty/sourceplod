@@ -7,11 +7,11 @@ package ru.plod.util.keyboard
 	 * ...
 	 * @author Romasty
 	 */
-	public class AbstractHKMap
+	public class AbstractHotkeyer
 	{
 		private var keyService : HotkeyService;
 		
-		public function AbstractHKMap()
+		public function AbstractHotkeyer()
 		{
 			init();
 		}

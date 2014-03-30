@@ -4,7 +4,6 @@ package ru.plod.util.keyboard
 
     import flash.display.Stage;
     import flash.events.KeyboardEvent;
-    import flash.ui.Keyboard;
     import flash.utils.Dictionary;
 
     public class  HotkeyService implements IHotkeyService
@@ -26,11 +25,13 @@ package ru.plod.util.keyboard
 
         public function getHotkey(keyCode : uint) : Hotkey
         {
+            trace(keyCode, _keyMap[keyCode])
             var hk : Hotkey = _keyMap[keyCode] ||= new Hotkey(keyCode);
+
             return hk;
         }
 
-        public function getCombo(...args) : HotkeyCombo
+        /*public function getCombo(...args) : HotkeyCombo
         {
             //TODO cache
             var combo : HotkeyCombo = new HotkeyCombo();
@@ -38,10 +39,10 @@ package ru.plod.util.keyboard
                 combo.addHotkey(getHotkey(keyCode));
             }
             return combo;
-        }
+        }*/
 
 
-         private function onKeyDown(event : KeyboardEvent) : void
+        private function onKeyDown(event : KeyboardEvent) : void
 		{
 			getHotkey(event.keyCode).update(true);
 		}
