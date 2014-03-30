@@ -9,7 +9,6 @@ package ru.plod.core.commands {
 
         protected var _commands : Array;
 
-
         public function CommandPool()
         {
             _commands = new Array();
@@ -38,7 +37,6 @@ package ru.plod.core.commands {
 
         public function addAll(arr : Array) : void
         {
-            //_commands = _commands.concat(arr);
             var cmd : ICommand;
             for each(cmd in arr) {
                 add(cmd);
@@ -49,9 +47,6 @@ package ru.plod.core.commands {
         {
             return _commands.length;
         }
-
-
-
 
         public function executeNext() : ICommand
         {

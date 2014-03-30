@@ -78,14 +78,14 @@ package ru.plod.gamekit.path2d {
 		}
 
 
-		public function getRotation(time:Number):Number
+		public function getDirection(time:Number):Number
 		{
 			if (time <= _start.time) {
-				return _edges[0].rotation;
+				return _edges[0].direction;
 			} else if (time >= _end.time) {
-				return _edges[_edges.length - 1].rotation;
+				return _edges[_edges.length - 1].direction;
 			} else {
-				return getEdge(time).rotation;
+				return getEdge(time).direction;
 			}
 		}
 

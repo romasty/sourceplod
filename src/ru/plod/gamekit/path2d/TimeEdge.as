@@ -15,7 +15,7 @@ package ru.plod.gamekit.path2d {
 		private var _end:TimePoint;
 		private var _length : Number;
 		private var _followTime:Number;
-		private var _rotation:Number;
+		private var _direction:Number;
 
 		public function TimeEdge(start:TimePoint, end:TimePoint)
 		{
@@ -25,7 +25,7 @@ package ru.plod.gamekit.path2d {
 			this._end = end;
 			_length = Point.distance(start, end);
 			_followTime = end.time - start.time;
-			_rotation = Math.atan2(end.y - start.y, end.x - start.x);
+			_direction = Math.atan2(end.y - start.y, end.x - start.x);
 		}
 
 		public function get start():TimePoint
@@ -74,9 +74,9 @@ package ru.plod.gamekit.path2d {
 			return time >= _start.time && time <= _end.time;
 		}
 
-		public function get rotation():Number
+		public function get direction():Number
 		{
-			return _rotation;
+			return _direction;
 		}
 
 		private function approximate(startValue:Number, endValue:Number, k:Number):Number
