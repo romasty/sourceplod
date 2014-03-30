@@ -33,8 +33,6 @@
                 super.update(pressed);
                 if(_enabled) pressed ? eventDown.broadcast() : eventUp.broadcast();
             }
-
         }
     }
-
 }

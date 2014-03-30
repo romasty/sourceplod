@@ -26,7 +26,7 @@ package ru.plod.util.keyboard
 
         protected function onChange(hotkey : Hotkey) : void
         {
-            var combo : Boolean = false;
+            var combo : Boolean = true;
             for each (var h : Hotkey in hotkeys) {
                 combo &&= h.pressed;
             }

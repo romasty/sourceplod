@@ -9,10 +9,10 @@ package ru.plod.broadcaster {
 
 	public class Broadcaster implements IBroadcaster {
 
+        public var target:* = null;
+
 		protected const handlers:Vector.<Function> = new Vector.<Function>();
 		protected const toUnsubscribe:Vector.<Function> = new Vector.<Function>();
-
-		public var target:* = null;
 		protected var _broadcasting:Boolean = false;
 
 		public function Broadcaster()

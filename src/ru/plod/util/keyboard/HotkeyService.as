@@ -25,13 +25,10 @@ package ru.plod.util.keyboard
 
         public function getHotkey(keyCode : uint) : Hotkey
         {
-            trace(keyCode, _keyMap[keyCode])
-            var hk : Hotkey = _keyMap[keyCode] ||= new Hotkey(keyCode);
-
-            return hk;
+            return _keyMap[keyCode] ||= new Hotkey(keyCode);
         }
 
-        /*public function getCombo(...args) : HotkeyCombo
+        public function getCombo(...args) : HotkeyCombo
         {
             //TODO cache
             var combo : HotkeyCombo = new HotkeyCombo();
@@ -39,7 +36,7 @@ package ru.plod.util.keyboard
                 combo.addHotkey(getHotkey(keyCode));
             }
             return combo;
-        }*/
+        }
 
 
         private function onKeyDown(event : KeyboardEvent) : void
