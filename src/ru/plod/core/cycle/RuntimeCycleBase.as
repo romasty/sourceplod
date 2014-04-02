@@ -7,40 +7,31 @@
  */
 package ru.plod.core.cycle {
 
-	public class RuntimeCycleBase implements ICycleProcessor {
+	public class RuntimeCycleBase extends AbstractRuntimeProcess implements IRuntimeProcess {
 
-        private var _source:IProcessSource;
-        protected var _processor:ICycleProcessor;
+		protected var _source:IRuntimeSource;
 
-        public function RuntimeCycleBase(source:IProcessSource = null, processor:ICycleProcessor = null)
+        public function RuntimeCycleBase(source:IRuntimeSource = null)
         {
             _source = source ? source : new ProcessSourceBase();
-			_processor = processor ? processor : this;
         }
 
-        public function get source():IProcessSource
+        public function get source():IRuntimeSource
         {
             return _source;
         }
 
-		public function process(object:Object):Boolean
-		{
-			//to override
-			return false;
-		}
-
-		public function update():void
+		override public function update(deltaTime : Number):void
         {
-            for each(var object:Object in _source.source) {
-                if (!process(object)) {
-                    _source.remove(object);
-                }
+			if(!_running) return;
+			_source.refresh();
+            for each(var process:IRuntimeProcess in _source.activeSource) {
+				process.update(deltaTime);
             }
-
             _source.refresh();
         }
 
-        public function cleanUp():void
+		public function cleanUp():void
         {
             _source.cleanUp();
         }

@@ -7,13 +7,13 @@
  */
 package ru.plod.core.cycle {
 
-    public interface IProcessSource {
+    public interface IRuntimeSource {
 
-        function get source():Array;
+        function get activeSource():Vector.<IRuntimeProcess>;
 
-        function add(item:Object):void
+        function addProcess(process:IRuntimeProcess, awake : Boolean = true):void
 
-        function remove(item:Object):void
+        function removeProcess(process:IRuntimeProcess):void
 
         function refresh():void;
 

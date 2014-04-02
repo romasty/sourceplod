@@ -8,12 +8,14 @@
 package ru.plod.gamekit.location {
 	import flash.geom.Point;
 
-	public interface IPosition {
+	public interface IPositionLogic {
 
-		function getStartValue() : Point;
+		/*function getStartValue() : Point;
 		function getValue(time : uint) : Point;
 		function getCurrentValue() : Point;
-		function getFinalValue() : Point;
+		function getFinalValue() : Point;*/
+
+		function update(time : Number, result : Point) : Point;
 
 	}
 }

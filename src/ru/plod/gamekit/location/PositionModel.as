@@ -14,74 +14,70 @@ package ru.plod.gamekit.location {
 
 		public const eventPositionChange:Broadcaster = new Broadcaster();
 		public const eventRotationChange:Broadcaster = new Broadcaster();
-		internal const eventKill:Broadcaster = new Broadcaster();
 
-		protected var _position:IPosition;
-		protected var _rotation:IPosition;
-		private var _killed:Boolean;
+		protected var _position:Point = new Point();
+		protected var _rotation:Point = new Point();
+
+		protected var _logicPosition:IPositionLogic;
+		protected var _logicRotation:IPositionLogic;
 
 		public function PositionModel()
 		{
 			eventPositionChange.target = this;
 			eventRotationChange.target = this;
-			eventKill.target = this;
 		}
 
-
-		public function get position():IPosition
+		public function getPosition(time:Number = NaN):Point
 		{
+			if (!isNaN(time) && _logicPosition) _position = _logicPosition.update(time, _position);
 			return _position;
 		}
 
-
-		public function set position(val:IPosition):void
+		public function setPosition(position:Point, stopMove : Boolean = true):void
 		{
-			if (_killed) return;
-			if (val != _position) {
-				_position = val;
+			_position.copyFrom(position);
+			if(stopMove) _logicPosition = null;
+			eventPositionChange.broadcast();
+		}
+
+		public function getRotation(time:Number = NaN):Point
+		{
+			if (!isNaN(time) && _logicRotation) _position = _logicRotation.update(time, _rotation);
+			return _rotation;
+		}
+
+		public function setRotation(rotation:Point, stopRotate : Boolean = true):void
+		{
+			_rotation.copyFrom(rotation);
+			if(stopRotate) _logicRotation = null;
+			eventPositionChange.broadcast();
+		}
+
+
+		public function setLogicPosition(val:IPositionLogic, startPosition:Point = null):void
+		{
+			if (val != _logicPosition) {
+				_logicPosition = val;
+				if (startPosition) _position.copyFrom(startPosition);
 				eventPositionChange.broadcast();
 			}
 		}
 
-		public function get rotation():IPosition
+		public function setLogicRotation(val:IPositionLogic, startRotation:Point = null):void
 		{
-			return _rotation;
-		}
-
-		public function set rotation(val:IPosition):void
-		{
-			if (_killed) return;
-			if (val != _rotation) {
-				_rotation = val;
+			if (val != _logicRotation) {
+				_logicRotation = val;
+				if (startRotation) _rotation.copyFrom(startRotation);
 				eventRotationChange.broadcast();
 			}
 		}
 
-
-		public function get inMove():Boolean
+		public function clear():void
 		{
-			if (_position) {
-				var current:Point = _position.getCurrentValue();
-				var final:Point = _position.getFinalValue();
-				if (current && final && !current.equals(final)) return true;
-			}
-			return false;
-		}
-
-		public function kill():void
-		{
-			if (!_killed) {
-				_killed = true;
-				_position = null;
-				_rotation = null;
-				eventKill.broadcast();
-			}
-		}
-
-
-		public function get killed():Boolean
-		{
-			return _killed;
+			_logicPosition = null;
+			_logicRotation = null;
+			eventPositionChange.broadcast();
+			eventRotationChange.broadcast();
 		}
 	}
 }

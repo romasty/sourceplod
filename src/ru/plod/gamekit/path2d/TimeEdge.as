@@ -7,81 +7,60 @@
  */
 package ru.plod.gamekit.path2d {
 
-	import flash.geom.Point;
+	import ru.plod.core.geom.Edge;
 
-	public  class TimeEdge {
+	import ru.plod.core.geom.ParametricPoint;
 
-		private var _start:TimePoint;
-		private var _end:TimePoint;
-		private var _length : Number;
-		private var _followTime:Number;
-		private var _direction:Number;
+	public class TimeEdge extends Edge {
 
-		public function TimeEdge(start:TimePoint, end:TimePoint)
+		protected var tStart:ParametricPoint;
+		protected var tEnd:ParametricPoint;
+
+		public function TimeEdge(start:ParametricPoint, end:ParametricPoint)
 		{
-			if(start.time < end.time) throw new ArgumentError();
+			if (start.t < end.t) throw new ArgumentError();
 
-			this._start = start;
-			this._end = end;
-			_length = Point.distance(start, end);
-			_followTime = end.time - start.time;
-			_direction = Math.atan2(end.y - start.y, end.x - start.x);
+			tStart = start as ParametricPoint;
+			tEnd = tEnd as ParametricPoint;
+			super(start, end);
 		}
 
-		public function get start():TimePoint
-		{
-			return _start;
-		}
-
-		public function get end():TimePoint
-		{
-			return _end;
-		}
-
-		public function get length():Number
-		{
-			return _length;
-		}
 
 		public function get followTime():Number
 		{
-			return _followTime;
+			return tEnd.t - tStart.t;
 		}
 
-		public function getAtTime(time:Number):TimePoint
+		public function getAtTime(time:Number):ParametricPoint
 		{
-			if (time < _start.time || time > _end.time) {
+			if (time < tStart.t || time > tEnd.t) {
 				return null;
 			}
 
-			if (time == _start.time) {
-				return _start;
-			} else if (time == _end.time) {
-				return _end;
+			if (time == tStart.t) {
+				return tStart;
+			} else if (time == tEnd.t) {
+				return tEnd;
 			} else {
 
-				var k:Number = (time - _start.time) / _followTime;
+				var k:Number = (time - tStart.t) / followTime;
+				var x:Number = tStart.x + k * (tEnd.x - tStart.x);
+				var y:Number = tStart.y + k * (tEnd.y - tStart.y);
 
-				var x:Number = approximate(_start.x, _end.x, k);
-				var y:Number = approximate(_start.y, _end.y, k);
-
-				return new TimePoint(time, new Point(x, y));
+				return new ParametricPoint(x, y, time);
 			}
 		}
 
-		public function atTime(time : Number) : Boolean
+		public function atTime(time:Number):Boolean
 		{
-			return time >= _start.time && time <= _end.time;
+			return time >= tStart.t && time <= tEnd.t;
 		}
 
 		public function get direction():Number
 		{
-			return _direction;
+			if (tStart.x == tEnd.x && tStart.y == tEnd.y) return undefined;
+			return Math.atan2(end.y - start.y, end.x - start.x);
 		}
 
-		private function approximate(startValue:Number, endValue:Number, k:Number):Number
-		{
-			return startValue + k * (endValue - startValue);
-		}
 	}
 }
