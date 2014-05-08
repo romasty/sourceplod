@@ -6,18 +6,8 @@
  * To change this template use File | Settings | File Templates.
  */
 package ru.plod.gamekit.path2d {
-	import flash.geom.Point;
 
-	public interface IPath2d {
+	public interface IPath2d extends IPath2dSegment {
 
-		function getPosition(t:Number):Point
-
-		function getDirection(t:Number):Number;
-
-		function get length():Number;
-
-		function equals(path:IPath2d):Boolean;
-
-		function clone():IPath2d;
 	}
 }

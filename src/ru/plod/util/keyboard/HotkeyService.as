@@ -6,7 +6,8 @@ package ru.plod.util.keyboard
     import flash.events.KeyboardEvent;
     import flash.utils.Dictionary;
 
-    public class  HotkeyService implements IHotkeyService
+
+	public class  HotkeyService implements IHotkeyService
     {
         private const _keyMap : Dictionary = new Dictionary();
 
@@ -44,12 +45,9 @@ package ru.plod.util.keyboard
 			getHotkey(event.keyCode).update(true);
 		}
 
-
 		private function onKeyUp(event : KeyboardEvent) : void
 		{
             getHotkey(event.keyCode).update(false);
 		}
-
     }
-
 }

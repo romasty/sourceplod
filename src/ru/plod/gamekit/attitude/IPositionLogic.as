@@ -5,7 +5,7 @@
  * Time: 11:28 PM
  * To change this template use File | Settings | File Templates.
  */
-package ru.plod.gamekit.location {
+package ru.plod.gamekit.attitude {
 	import flash.geom.Point;
 
 	public interface IPositionLogic {

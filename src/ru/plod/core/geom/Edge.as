@@ -11,19 +11,19 @@ package ru.plod.core.geom {
 
 	public class Edge {
 
-		public var start:Point;
-		public var end:Point;
+		public var startPoint:Point;
+		public var endPoint:Point;
 
 
 		public function Edge(start:Point, end:Point)
 		{
-			this.start = start;
-			this.end = end;
+			this.startPoint = start;
+			this.endPoint = end;
 		}
 
 		public function get length():Number
 		{
-			return Point.distance(start, end);
+			return Point.distance(startPoint, endPoint);
 		}
 
 
@@ -31,13 +31,13 @@ package ru.plod.core.geom {
 		{
 			var result:Point = new Point();
 
-			var dx:Number = end.x - start.x;
-			var dy:Number = end.y - start.y;
-			var sx:Number = point.x - start.x;
-			var sy:Number = point.y - start.y;
+			var dx:Number = endPoint.x - startPoint.x;
+			var dy:Number = endPoint.y - startPoint.y;
+			var sx:Number = point.x - startPoint.x;
+			var sy:Number = point.y - startPoint.y;
 			var k:Number = (sx * dx + sy * dy) / (dx * dx + dy * dy);
-			result.x = start.x + dx * k;
-			result.y = start.y + dy * k;
+			result.x = startPoint.x + dx * k;
+			result.y = startPoint.y + dy * k;
 
 			return result;
 		}
@@ -49,25 +49,25 @@ package ru.plod.core.geom {
 
 		public function projectionEdge(edge:Edge):Edge
 		{
-			return new Edge(projectionPoint(edge.start), projectionPoint(edge.end));
+			return new Edge(projectionPoint(edge.startPoint), projectionPoint(edge.endPoint));
 		}
 
 		public function intersection(edge:Edge, strict:Boolean = true):Point
 		{
 			var result:Point;
 
-			var d:Number = (start.x - end.x) * (edge.end.y - edge.start.y) - (start.y - end.y) * (edge.end.x - edge.start.x);
+			var d:Number = (startPoint.x - endPoint.x) * (edge.endPoint.y - edge.startPoint.y) - (startPoint.y - endPoint.y) * (edge.endPoint.x - edge.startPoint.x);
 
-			var da:Number = (start.x - edge.start.x) * (edge.end.y - edge.start.y) - (start.y - edge.start.y) * (edge.end.x - edge.start.x);
-			var db:Number = (start.x - end.x) * (start.y - edge.start.y) - (start.y - end.y) * (start.x - edge.start.x);
+			var da:Number = (startPoint.x - edge.startPoint.x) * (edge.endPoint.y - edge.startPoint.y) - (startPoint.y - edge.startPoint.y) * (edge.endPoint.x - edge.startPoint.x);
+			var db:Number = (startPoint.x - endPoint.x) * (startPoint.y - edge.startPoint.y) - (startPoint.y - endPoint.y) * (startPoint.x - edge.startPoint.x);
 
 			var ta:Number = da / d;
 			var tb:Number = db / d;
 			if (isNaN(ta) || isNaN(tb)) return null;
 
 			if (!strict || (ta >= 0 && ta <= 1 && tb >= 0 && tb <= 1)) {
-				var dx:Number = start.x + ta * (end.x - start.x);
-				var dy:Number = start.y + ta * (end.y - start.y);
+				var dx:Number = startPoint.x + ta * (endPoint.x - startPoint.x);
+				var dy:Number = startPoint.y + ta * (endPoint.y - startPoint.y);
 
 				return new Point(dx, dy);
 			}
@@ -77,25 +77,25 @@ package ru.plod.core.geom {
 
 		public function containsPoint(point:Point, strict:Boolean = true):Boolean
 		{
-			var res:Boolean = Math.abs(( point.x - start.x) * (end.y - start.y) - (point.y - start.y) * (end.x - start.x)) <.000001;
-			if(strict) res &&= ((start.x < point.x && point.x < end.x) || (end.x < point.x && point.x < start.x));
+			var res:Boolean = Math.abs(( point.x - startPoint.x) * (endPoint.y - startPoint.y) - (point.y - startPoint.y) * (endPoint.x - startPoint.x)) <.000001;
+			if(strict) res &&= ((startPoint.x < point.x && point.x < endPoint.x) || (endPoint.x < point.x && point.x < startPoint.x));
 
 			return res;
 		}
 
-		public function equals(edge:Edge):Boolean
+		/*public function equals(edge:Edge):Boolean
 		{
-			return start.equals(edge.start) && end.equals(edge.end);
+			return startPoint.equals(edge.startPoint) && endPoint.equals(edge.endPoint);
 		}
 
 		public function clone():Edge
 		{
-			return new Edge(start.clone(), end.clone());
-		}
+			return new Edge(startPoint.clone(), endPoint.clone());
+		}*/
 
 		public function toString():String
 		{
-			return "[Edge {start:" + start + "; end:" + end + "; length:" + length + "}]";
+			return "[Edge {start:" + startPoint + "; end:" + endPoint + "; length:" + length + "}]";
 		}
 	}
 }

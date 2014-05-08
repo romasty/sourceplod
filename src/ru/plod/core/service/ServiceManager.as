@@ -20,14 +20,14 @@ package ru.plod.core.service {
 
 		private var _srvMap:ClassDictionary = new ClassDictionary(true);
 
-		public function registerService(srvInterface:Class, srvImplementation:Object):void
+		public function registerService(srvClassRef:Class, srvImplementation:Object):void
 		{
-			_srvMap.registerInstance(srvInterface, srvImplementation)
+			_srvMap.registerInstance(srvClassRef, srvImplementation)
 		}
 
-		public function getService(srvInterface:Class):Object
+		public function getService(srvClassRef:Class):Object
 		{
-			return _srvMap.getInstance(srvInterface);
+			return _srvMap.getInstance(srvClassRef);
 		}
 	}
 }

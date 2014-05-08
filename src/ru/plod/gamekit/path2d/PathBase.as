@@ -11,148 +11,149 @@ package ru.plod.gamekit.path2d {
 	import ru.plod.core.geom.GeomUtil;
 
 	import ru.plod.core.geom.ParametricPoint;
+	import ru.plod.gamekit.path2d.IPath2dSegment;
 
 
-	public class PathBase {
+	public class PathBase implements IPath2d{
 
-		private var _start:ParametricPoint;
-		private var _end:ParametricPoint;
-		private var _points:Vector.<ParametricPoint>;
-		private var _edges:Vector.<TimeEdge>;
+		private var _segments:Vector.<IPath2dSegment>;
+		private var iterator:SegmentIterator;
 
-
-
-		public function PathBase(path:Vector.<Point>)
+		public function PathBase(segments:Vector.<IPath2dSegment> = null)
 		{
-			if (path == null || path.length == 0) {
-				throw new ArgumentError();
-			}
+			_segments = segments ? segments : new Vector.<IPath2dSegment>();
 
-			if(path is Vector.<ParametricPoint>) {
-				_points = Vector.<ParametricPoint>(path);
-			} else {
-				_points = GeomUtil.getParametricPoints(path, 1, 0);
-			}
-
-			_start = _points[0];
-			_end = _points[_points.length - 1];
-
-			createEdges();
+			iterator = new SegmentIterator();
+			iterator.segments = _segments;
 		}
 
-		private function createEdges():void
-		{
-			_edges = new Vector.<TimeEdge>();
+		/*private function createSegments():void
+		 {
+		 _segments = new Vector.<IPath2dSegment>();
 
-			if(_points.length > 2) {
-				var t1:ParametricPoint;
-				var t2:ParametricPoint;
-				for (var i:int = 1; i < _points.length; i++) {
-					t1 = _points[i - 1];
-					t2 = _points[i];
-					_edges.push(new TimeEdge(t1, t2));
-				}
-			} else {
-				_edges.push(new TimeEdge(_start, _end));
-			}
+		 if(_points.length > 2) {
+		 var t1:ParametricPoint;
+		 var t2:ParametricPoint;
+		 for (var i:int = 1; i < _points.length; i++) {
+		 t1 = _points[i - 1];
+		 t2 = _points[i];
+		 _segments.push(new LineSegment(t1, t2));
+		 }
+		 } else {
+		 _segments.push(new LineSegment(_start, _end));
+		 }
+		 }*/
+
+		public function get segments():Vector.<IPath2dSegment>
+		{
+			return _segments;
 		}
 
 
-		public function getPosition(time:Number):ParametricPoint
+		public function getPosition(distance:Number, point : Point = null):Point
 		{
-			if (time <= _start.t) {
-				return _start;
-			} else if (time >= _end.t) {
-				return _end;
-			} else {
-				return getEdge(time).getAtTime(time);
-			}
+			var s:IPath2dSegment = iterator.getCurrent(distance);
+			return s.getPosition(iterator.segmentDistance, point);
+		}
+
+		public function getDirection(distance:Number):Number
+		{
+			var s:IPath2dSegment = iterator.getCurrent(distance);
+			return s.getDirection(iterator.segmentDistance);
+		}
+
+		public function getSegment(distance:Number):IPath2dSegment
+		{
+			return iterator.getCurrent(distance);
 		}
 
 
-		public function getDirection(time:Number):Number
+
+		public function get start():Point
 		{
-			if (time <= _start.t) {
-				return _edges[0].direction;
-			} else if (time >= _end.t) {
-				return _edges[_edges.length - 1].direction;
-			} else {
-				return getEdge(time).direction;
-			}
+			return _segments.length ? _segments[0].start : null;
 		}
 
-		public function getEdge(time:Number):TimeEdge
+		public function get end():Point
 		{
-			for each (var timedEdge:TimeEdge in _edges) {
-				if (timedEdge.atTime(time)) return timedEdge;
-			}
-
-			return null;
+			return _segments.length ? _segments[_segments.length - 1].end : null;
 		}
 
-		public function get points():Vector.<ParametricPoint>
+		public function get length():Number
 		{
-			return _points;
-		}
-
-		public function get edges():Vector.<TimeEdge>
-		{
-			return _edges;
-		}
-
-		public function get start():ParametricPoint
-		{
-			return _start;
-		}
-
-		public function get end():ParametricPoint
-		{
-			return _end;
-		}
-
-		public function get length() : Number
-		{
-			var l : Number = 0;
-			for each (var timeEdge:TimeEdge in _edges) {
-				l+=timeEdge.length;
+			var l:Number = 0;
+			for each (var segment:IPath2dSegment in _segments) {
+				l += segment.length;
 			}
 			return l;
 		}
 
-		public function get followTime():Number
+
+		public function offset(dx:Number, dy:Number):void
 		{
-			var t : Number = 0;
-			for each (var timeEdge:TimeEdge in _edges) {
-				t+=timeEdge.followTime;
-			}
-			return t;
+			//TODO
+			/*for each (var point:Point in _points) {
+			 point.offset(dx, dy)
+			 }*/
 		}
 
 
-		public function offset(x : Number, y : Number, time : Number) : void
+		public function slice(start:Number, end:Number):IPath2dSegment
 		{
-			for each (var point:ParametricPoint in _points) {
-				point.x += x;
-				point.y += y;
-				point.t += time;
-			}
+			//TODO
+			return null;
 		}
 
-		public function equals(path : PathBase) : Boolean
+		public function equals(path:PathBase):Boolean
 		{
-			if(path.points.length != _points.length) return false;
+			//TODO:
+			/*if(path.points.length != _points.length) return false;
 
-			for (var i:int = 0; i < _points.length; i++) {
-				var p:ParametricPoint = _points[i];
-				if(!_points[i].equals(path.points[i])) return false;
-			}
+			 for (var i:int = 0; i < _points.length; i++) {
+			 var p:ParametricPoint = _points[i];
+			 if(!_points[i].equals(path.points[i])) return false;
+			 }*/
 
 			return true;
 		}
 
-		public function clone() : PathBase
+		public function clone():PathBase
 		{
-			return new PathBase(_points.concat() as Vector.<Point>);
+			return new PathBase(_segments.concat() as Vector.<IPath2dSegment>);
 		}
 	}
+}
+
+import ru.plod.gamekit.path2d.IPath2dSegment;
+
+//TODO;
+class SegmentIterator {
+
+	internal var segments:Vector.<IPath2dSegment>;
+
+	internal var currentIndex:int = 0;
+	internal var currentSegment:IPath2dSegment = null;
+	internal var currentDistance:Number = 0;
+	internal var segmentDistance:Number = 0;
+
+	internal function getCurrent(distance:Number):IPath2dSegment
+	{
+		if (distance != currentDistance) {
+			currentDistance = segmentDistance = distance;
+			for each (var segment:IPath2dSegment in segments) {
+				var segmentLength:Number = segment.length;
+				if (segmentDistance <= segmentLength) {
+					break;
+				}
+				segmentDistance -= segmentLength;
+				currentIndex++;
+			}
+
+			currentSegment = segment;
+			segmentDistance += segmentLength;
+		}
+		return currentSegment;
+	}
+
+
 }
