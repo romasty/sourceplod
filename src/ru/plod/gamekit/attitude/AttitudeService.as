@@ -6,7 +6,7 @@
  * To change this template use File | Settings | File Templates.
  */
 package ru.plod.gamekit.attitude {
-	import ru.plod.core.cycle.RuntimeCycleBase;
+	import ru.plod.core.flow.RuntimeCycleBase;
 
 
 	public class AttitudeService {

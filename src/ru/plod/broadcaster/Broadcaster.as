@@ -54,7 +54,7 @@ package ru.plod.broadcaster {
 
 		protected function handle(handler:Function, args:Array = null):void
 		{
-			args = args ||= new Array();
+			args = args ||= [];
 			args.unshift(target);
 			handler.apply(NaN, args);
 		}

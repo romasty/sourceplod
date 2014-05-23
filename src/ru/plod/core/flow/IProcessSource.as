@@ -5,9 +5,9 @@
  * Time: 14:49
  * To change this template use File | Settings | File Templates.
  */
-package ru.plod.core.cycle {
+package ru.plod.core.flow {
 
-    public interface IRuntimeSource {
+    public interface IProcessSource {
 
         function get activeSource():Vector.<IRuntimeProcess>;
 
