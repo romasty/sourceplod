@@ -5,28 +5,29 @@
  * Time: 13:05
  * To change this template use File | Settings | File Templates.
  */
-package ru.plod.core.cycle {
+package ru.plod.core.flow {
 
 	public class RuntimeCycleBase extends AbstractRuntimeProcess implements IRuntimeProcess {
 
-		protected var _source:IRuntimeSource;
+		protected var _source:IProcessSource;
 
-        public function RuntimeCycleBase(source:IRuntimeSource = null)
+        public function RuntimeCycleBase(source:IProcessSource = null)
         {
             _source = source ? source : new ProcessSourceBase();
         }
 
-        public function get source():IRuntimeSource
+        public function get source():IProcessSource
         {
             return _source;
         }
 
-		override public function update(deltaTime : Number):void
+		override public function updateTime(time:uint, delta:uint):void
         {
 			if(!_running) return;
+
 			_source.refresh();
             for each(var process:IRuntimeProcess in _source.activeSource) {
-				process.update(deltaTime);
+				process.updateTime(time, delta);
             }
             _source.refresh();
         }
@@ -35,5 +36,11 @@ package ru.plod.core.cycle {
         {
             _source.cleanUp();
         }
+
+		override public function finalize():void
+		{
+			_source.cleanUp();
+			_source = null;
+		}
     }
 }

@@ -5,7 +5,7 @@
  * Time: 12:19 AM
  * To change this template use File | Settings | File Templates.
  */
-package ru.plod.core.cycle {
+package ru.plod.core.flow {
 
 	import ru.plod.broadcaster.Broadcaster;
 	import ru.plod.broadcaster.IBroadcast;
@@ -32,7 +32,7 @@ package ru.plod.core.cycle {
 			return _eventSleep;
 		}
 
-		public function awake():void
+		public function activate():void
 		{
 			if(!_running) {
 				_running = true;
@@ -48,9 +48,13 @@ package ru.plod.core.cycle {
 			}
 		}
 
-		public function update(deltaTime:Number):void
-		{
 
+		public function updateTime(time:uint, delta:uint):void
+		{
+		}
+
+		public function finalize():void
+		{
 		}
 	}
 }

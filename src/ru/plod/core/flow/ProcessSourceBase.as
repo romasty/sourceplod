@@ -5,8 +5,8 @@
  * Time: 15:10
  * To change this template use File | Settings | File Templates.
  */
-package ru.plod.core.cycle {
-	public class ProcessSourceBase implements IRuntimeSource {
+package ru.plod.core.flow {
+	public class ProcessSourceBase implements IProcessSource {
 
 		protected const _processList:Vector.<IRuntimeProcess> = new Vector.<IRuntimeProcess>();
 		protected const _activeProcessList:Vector.<IRuntimeProcess> = new Vector.<IRuntimeProcess>();
@@ -29,7 +29,7 @@ package ru.plod.core.cycle {
 				_processList.push(process);
 				process.eventAwake.subscribe(onProcessAwake);
 				process.eventSleep.subscribe(onProcessSleep);
-				if(awake) process.awake();
+				if(awake) process.activate();
 			}
 		}
 
@@ -41,7 +41,6 @@ package ru.plod.core.cycle {
 				process.sleep();
 				process.eventAwake.unsubscribe(onProcessAwake);
 				process.eventSleep.unsubscribe(onProcessSleep);
-
 			}
 		}
 
