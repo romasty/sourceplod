@@ -3,14 +3,10 @@
 
     import flash.geom.Point;
     import flash.ui.Keyboard;
-	import flash.utils.Dictionary;
 
-	import net.opengames.client.gui.text.custom.DialogTextTF;
+    import ru.plod.broadcaster.Broadcaster;
 
-	import ru.plod.broadcaster.Broadcaster;
-	import ru.plod.util.keyboard.HotkeyService;
-
-	/**
+    /**
      * ...
      * @author Romasty
      */
