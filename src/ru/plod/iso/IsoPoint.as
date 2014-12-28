@@ -11,9 +11,9 @@ package ru.plod.iso
 
     public class IsoPoint
     {
-        private const scrPoint : Point = new Point();
-        private static const kx : Number = 1 / Math.sqrt(2);
-        private static const ky : Number = 1 / Math.sqrt(6);
+        protected const scrPoint : Point = new Point();
+        protected static const kx : Number = 1 / Math.sqrt(2);
+        protected static const ky : Number = 1 / Math.sqrt(6);
 
         public var x : int;
         public var y : int;
@@ -26,10 +26,10 @@ package ru.plod.iso
             this.z = z;
         }
 
-        public function toScreen() : Point
+        public function getScreenPoint() : Point
         {
-            scrPoint.x = kx * (x - y);
-            scrPoint.y = ky * (x - 2 * z + y);
+            scrPoint.x = kx * (x + y);
+            scrPoint.y = ky * (x - y - 2 * z );
             return scrPoint;
         }
 
