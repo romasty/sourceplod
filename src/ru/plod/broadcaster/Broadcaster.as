@@ -49,6 +49,9 @@ package ru.plod.broadcaster
             _broadcasting = true;
 
             _executionCount = _handlers.length;
+
+            if(target) rest.unshift(target);
+
             for (_count = 0; _count < _executionCount; _count++) {
                 var handler : Function = _handlers[_count];
                 handle(handler, rest);
@@ -60,7 +63,6 @@ package ru.plod.broadcaster
         protected function handle(handler : Function, args : Array = null) : void
         {
             args = args ||= new Array();
-            if(target) args.unshift(target);
             handler.apply(NaN, args);
         }
     }

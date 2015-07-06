@@ -9,7 +9,6 @@ package ru.plod.gui.layout {
 	import flash.display.DisplayObject;
 	import flash.geom.Rectangle;
 
-	import mx.managers.ILayoutManager;
 
 	import ru.plod.gui.layout.measure.ILayoutMeasure;
 	import ru.plod.gui.layout.measure.LayoutMeasureFixed;
