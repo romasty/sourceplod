@@ -18,7 +18,7 @@ package ru.plod.core.commands
 
 		public function get eventComplete():IBroadcast
 		{
-			return null;
+			return _eventComplete;
 		}
 
 		public function Command()
