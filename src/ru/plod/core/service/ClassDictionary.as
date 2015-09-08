@@ -1,37 +1,30 @@
-/**
- * Created by IntelliJ IDEA.
- * User: romasty
- * Date: 26.08.11
- * Time: 13:48
- * To change this template use File | Settings | File Templates.
- */
-package ru.plod.core.service {
-
+package ru.plod.core.service
+{
 	import flash.utils.Dictionary;
 
-	public class ClassDictionary {
+	public class ClassDictionary
+	{
+		protected var _instanceByClass:Dictionary = new Dictionary();
 
-		protected var _services:Dictionary = new Dictionary();
-
-		protected var _strict:Boolean = false;
-
-		public function ClassDictionary(strict:Boolean = false)
+		public function ClassDictionary()
 		{
-			_strict = strict;
 		}
 
-		public function registerInstance(classRef:Class, classInstance:Object):void
+		public function setInstance(classRef:Class, instance:Object):void
 		{
-			if (!_strict || (classInstance is classRef)) {
-				_services[classRef] = classInstance;
-			} else {
+			if (instance is classRef)
+			{
+				_instanceByClass[classRef] = instance;
+			}
+			else
+			{
 				throw new ArgumentError();
 			}
 		}
 
 		public function getInstance(classRef:Class):Object
 		{
-			return _services[classRef];
+			return _instanceByClass[classRef];
 		}
 	}
 }
