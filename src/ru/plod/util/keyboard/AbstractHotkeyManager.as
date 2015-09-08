@@ -8,7 +8,7 @@ package ru.plod.util.keyboard {
 	 */
 	public class AbstractHotkeyManager {
 
-		private var keyService:IHotkeyService = ru.plod.core.service.getService(IHotkeyService);
+		private var keyService:IHotkeyService = getService(IHotkeyService);
 
 		public function AbstractHotkeyManager()
 		{
