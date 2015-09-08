@@ -7,8 +7,6 @@
  */
 package ru.plod.core.base {
 	import ru.plod.core.ILifecycle;
-	import ru.plod.core.ILifecycle;
-	import ru.plod.core.IRuntime;
 
 	public class BaseContainer implements IBaseContainer {
 

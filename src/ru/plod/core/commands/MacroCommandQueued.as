@@ -1,62 +1,51 @@
 package ru.plod.core.commands
 {
-	import ru.plod.core.commands.CommandQueue;
-
-
-	/**
-	 * ...
-	 * @author Romasty
-	 */
 	public class MacroCommandQueued extends Command implements IMacroCommand
 	{
+		protected var _queue:CommandQueue;
 
-        protected var _queue : CommandQueue;
-
-		public function MacroCommandQueued(commands : Array = null)
+		public function MacroCommandQueued(commands:Vector.<ICommand> = null)
 		{
-            init(commands);
+			init(commands);
 		}
 
-        protected function init(commands : Array) : void
-        {
-            _queue = new CommandQueue(true);
-            _queue.onCommandComplete = commandComplete;
-            _queue.addAll(commands);
-        }
-
-        public function add(cmd : ICommand, atIndex : int = -1) : void
+		protected function init(commands:Vector.<ICommand>):void
 		{
-            _queue.add(cmd, atIndex);
+			_queue = new CommandQueue(true);
+			_queue.onCommandComplete = commandComplete;
+			_queue.addList(commands);
 		}
 
-		public function addList(arr : Array) : void
+		public function add(cmd:ICommand, atIndex:int = -1):void
 		{
-            _queue.addAll(arr);
+			_queue.add(cmd, atIndex);
 		}
-		
-		
+
+		public function addList(commands:Vector.<ICommand>):void
+		{
+			_queue.addList(commands);
+		}
+
 		override protected function run():void
 		{
 			super.run();
-			
-			if (_queue.length > 0) {
-				
-				(_queue as CommandQueue).unlock();
-				
-			} else {
-				
+
+			if (_queue.length > 0)
+			{
+				_queue.unlock();
+			}
+			else
+			{
 				super.complete();
 			}
 		}
-		
-		
-		protected function commandComplete(cmd : ICommand) : void
-		{
-			if (_queue.length == 0) {
 
-                trace("MACRO QUEUED:", "commandComplete");
-                super.complete();
-            }
+		protected function commandComplete(cmd:ICommand):void
+		{
+			if (_queue.length == 0)
+			{
+				super.complete();
+			}
 		}
 	}
 }
