@@ -1,14 +1,7 @@
-/**
- * Created with IntelliJ IDEA.
- * User: vic
- * Date: 1/7/14
- * Time: 6:55 PM
- * To change this template use File | Settings | File Templates.
- */
-package ru.plod.core.service {
-
-	public function getService(srvClassRef:Class):*
+package ru.plod.core.service
+{
+	public function getService(serviceClass:Class):*
 	{
-		return ServiceManager.instance.getService(srvClassRef);
+		return ServiceLocator.instance.getService(serviceClass);
 	}
 }

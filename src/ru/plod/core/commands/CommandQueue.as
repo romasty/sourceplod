@@ -1,61 +1,46 @@
-package ru.plod.core.commands {
-	import ru.plod.core.commands.ICommand;
+package ru.plod.core.commands
+{
+	public class CommandQueue extends CommandPool
+	{
+		protected var _locked:Boolean;
 
-	public class CommandQueue extends CommandPool {
+		public function CommandQueue(locked:Boolean = false)
+		{
+			_locked = locked;
+			super();
+		}
 
-        //protected var _running : Boolean = false;
-        protected var _locked : Boolean;
+		override public function add(cmd:ICommand, atIndex:int = -1):void
+		{
+			super.add(cmd, atIndex);
+			run();
+		}
 
+		protected function run():void
+		{
+			if (_commands.length > 0 && !_running && !_locked)
+			{
+				_running = true;
+				executeNext();
+			}
+		}
 
-        public function CommandQueue(locked : Boolean = false)
-        {
-            _locked = locked;
-            super();
-        }
+		override protected function commandComplete(cmd:ICommand):void
+		{
+			_running = false;
+			super.commandComplete(cmd);
+			run();
+		}
 
+		public function lock():void
+		{
+			_locked = true;
+		}
 
-        override public function add(cmd : ICommand, atIndex : int = -1) : void
-        {
-            super.add(cmd, atIndex);
-            run();
-        }
-
-        override public function addAll(arr : Array) : void
-        {
-            super.addAll(arr);
-        }
-
-
-
-        protected function run() : void
-        {
-            if (_commands.length > 0 && !_running && !_locked) {
-                _running = true;
-                executeNext();
-            }
-        }
-
-
-        override protected function commandComplete(cmd : ICommand) : void
-        {
-            _running = false;
-            super.commandComplete(cmd);
-            run();
-        }
-
-
-        public function lock() : void
-        {
-            _locked = true;
-        }
-
-        public function unlock() : void
-        {
-            _locked = false;
-            run();
-        }
-
-
-        
-    }
+		public function unlock():void
+		{
+			_locked = false;
+			run();
+		}
+	}
 }

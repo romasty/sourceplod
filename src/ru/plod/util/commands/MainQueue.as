@@ -3,11 +3,6 @@ package ru.plod.util.commands
 	import ru.plod.core.commands.ICommand;
 	import ru.plod.core.commands.CommandQueue;
 
-
-	/**
-     * ...
-     * @author Romasty
-     */
     public class MainQueue
     {
         
@@ -24,9 +19,9 @@ package ru.plod.util.commands
         }
 
 
-        public static function addCommands(arr : Array) : void
+        public static function addCommands(commands : Vector.<ICommand>) : void
         {
-            _commandQueue.addAll(arr);
+            _commandQueue.addList(commands);
         }
 
 

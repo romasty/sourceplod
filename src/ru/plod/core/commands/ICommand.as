@@ -1,18 +1,16 @@
 package ru.plod.core.commands
 {
-    import flash.events.IEventDispatcher;
+	import ru.plod.broadcaster.IBroadcast;
 
-    /**
-	 * ...
-	 * @author Romasty
-	 */
-	public interface ICommand extends IEventDispatcher
+	public interface ICommand
 	{
-		
-		function execute() : void;
+		function get eventComplete():IBroadcast;
+
+		function execute():void;
+
 		function get isAsync():Boolean;
+
 		function get status():int;
-		
 	}
 
 }

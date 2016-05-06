@@ -1,10 +1,9 @@
 package ru.plod.util.commands {
     import flash.utils.setTimeout;
 
-	import ru.plod.core.commands.Command;
+    import ru.plod.core.commands.Command;
 
-
-	public class DumpDelayCmd extends Command {
+    public class DumpDelayCmd extends Command {
 
         private var _delay : uint;
 
