@@ -9,7 +9,6 @@ package ru.plod.gamekit.stats {
 
 	public class StatAggregator {
 
-
 		private var _base : StatMap;
 		private var _delta : StatMap;
 		private var _result : StatMap = new StatMap();
@@ -53,14 +52,14 @@ package ru.plod.gamekit.stats {
 			if (op == StatOperator.MULTIPLY) {
 
 				modStats.modify(.01, StatOperator.MULTIPLY);
-				modStats.concatMap(_base, StatOperator.MULTIPLY);
-				_delta.concatMap(modStats, StatOperator.ADD);
+				modStats.mergeStatMap(_base, StatOperator.MULTIPLY);
+				_delta.mergeStatMap(modStats, StatOperator.ADD);
 
 			} else if (op == StatOperator.OVERRIDE) {
 				//TODO: OVERRIDE
 
 			} else {
-				_delta.concatMap(modStats, op);
+				_delta.mergeStatMap(modStats, op);
 			}
 
 
@@ -75,7 +74,7 @@ package ru.plod.gamekit.stats {
 
 			//TODO:
 			//_resultStats.copy(_baseStats);
-			_result.concatMap(_delta, StatOperator.ADD);
+			_result.mergeStatMap(_delta, StatOperator.ADD);
 		}
 
 
