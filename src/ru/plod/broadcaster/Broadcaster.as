@@ -24,6 +24,8 @@ package ru.plod.broadcaster
 
         public function subscribe(handler:Function):void
         {
+            if(handler == null) throw new ArgumentError("handler is null");
+
             var i:int = _handlers.indexOf(handler);
             if (i != -1) return;
 
@@ -57,16 +59,10 @@ package ru.plod.broadcaster
             for (_count = 0; _count < _executionCount; _count++)
             {
                 var handler:Function = _handlers[_count];
-                handle(handler, rest);
+                handler.apply(NaN, rest);
             }
 
             _broadcasting = false;
-        }
-
-        protected function handle(handler:Function, args:Array = null):void
-        {
-            args = args ||= new Array();
-            handler.apply(NaN, args);
         }
     }
 }
